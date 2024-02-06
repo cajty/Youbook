@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Reservation;
+use Illuminate\Support\Facades\Session;
+
 
 class ReservationController extends Controller
 {
     //
  
 
-    public function stor(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'startDate' => ['required', 'date'],
@@ -17,20 +20,19 @@ class ReservationController extends Controller
         
         ]);
 
-      
+
 
         $available = Reservation::where('id_livre', $request->book_id)
-                ->where('date_start', '<=', $request->endDate)
-                ->where('date_fin', '>=', $request->startDate)
+                ->where('start_time', '<=', $request->endDate)
+                ->where('end_time', '>=', $request->startDate)
                 ->count() == 0;
 
         if ($available) {
             Reservation::create([
-                'id_livre' => $request->book_id,
-                'id_user' => Auth::id(),
-                'date_start' => $request->startDate,
-                'date_fin' => $request->endDate,
-                'statut' => 'reserved',
+                'user_id' => $request->book_id,
+                'books_id' => 1,
+                'start_time' => $request->startDate,
+                'end_time' => $request->endDate,
             ]);
 
             Session::flash('success', 'Reservation successful.');
@@ -38,6 +40,6 @@ class ReservationController extends Controller
             Session::flash('error', 'The book is already reserved ');
         }
 
-        return redirect("/details/book/$request->book_id");
+        return redirect("/$request->book_id");
     }
 }

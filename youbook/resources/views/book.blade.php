@@ -15,14 +15,14 @@
 <body>
     <nav class="navbar navbar-expand-lg  navbar-light bg-light ">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('books.index') }}">YouBook</a>
+            <a class="navbar-brand" href="{{ route('book.index') }}">YouBook</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('books.library') }}">library</a>
+                        <a class="nav-link" href="{{ route('book.library') }}">library</a>
                     </li>
                 </ul>
             </div>
@@ -57,8 +57,8 @@
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
                     <td>
-                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-secondary">Update</a>
-                        <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline-block;">
+                        <a href="{{ route('book.edit', $book->id) }}" class="btn btn-secondary">Update</a>
+                        <form action="{{ route('book.destroy', $book->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">Delete</button>
@@ -69,7 +69,7 @@
             </tbody>
         </table>
 
-        <a href="{{ route('books.create') }}" class="btn btn-primary">Add Book</a>
+        <a href="{{ route('book.create') }}" class="btn btn-primary">Add Book</a>
     </div>
 
 

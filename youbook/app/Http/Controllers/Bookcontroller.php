@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
-use App\Models\Reservation;
+
 
 class BookController extends Controller
 {
@@ -40,14 +40,14 @@ class BookController extends Controller
             'author' => 'required',
             'description' => 'required',
         ]);
-        
 
-       
-        $book =Book::create([
-            'title'=> $request->title,
-            'author'=> $request->author,
-            'description'=> $request->description,
-            'user_id'=> 1,
+
+
+        $book = Book::create([
+            'title' => $request->title,
+            'author' => $request->author,
+            'description' => $request->description,
+            'user_id' => 1,
         ]);
 
         return redirect()->route('books.index')
@@ -60,14 +60,16 @@ class BookController extends Controller
     public function show(string $id)
     {
         $book = Book::findOrFail($id);
-        return view('books.show', compact('book'));
+        return view('show', compact('book'));
     }
 
-  
 
-    /**
-     * Update the specified resource in storage.
-     */
+    public function edit(string $id)
+    {
+        $book = Book::findOrFail($id);
+        return view('edit', compact('book'));
+    }
+
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -79,7 +81,7 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $book->update($request->all());
 
-        return redirect()->route('books.index')
+        return redirect()->route('book.index')
             ->with('success', 'Book updated successfully.');
     }
 
@@ -91,7 +93,7 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $book->delete();
 
-        return redirect()->route('books.index')
+        return redirect()->route('book.index')
             ->with('success', 'Book deleted successfully.');
     }
 }

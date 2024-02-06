@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\AuthentificationController;
 
 
 /*
@@ -15,13 +17,28 @@ use App\Http\Controllers\BookController;
 |
 */
 
+Route::get('/register', [AuthentificationController::class, 'showAccount'])->name('account');
+Route::post('/registerUser', [AuthentificationController::class, 'creatAccount'])->name('accountCreat');
+
+Route::get('/', [AuthentificationController::class, 'index'])->name('home');
+Route::post('/login', [AuthentificationController::class, 'login'])->name('login');  
 
 
-Route::get('/', [BookController::class, 'index'])->name('books.index');
-Route::get('/library', [BookController::class, 'library'])->name('books.library');
-Route::get('/create', [BookController::class, 'create'])->name('books.create');
-Route::post('/books', [BookController::class, 'store'])->name('books.store');
-Route::get('/{id}', [BookController::class, 'show'])->name('books.show');
-Route::get('/{id}/edit', [BookController::class, 'edit'])->name('books.edit');
-Route::put('/{id}', [BookController::class, 'update'])->name('books.update');
-Route::delete('/{id}', [BookController::class, 'destroy'])->name('books.destroy');
+
+
+
+Route::get('/books', [BookController::class, 'index'])->name('book.index');
+Route::post('/books', [BookController::class, 'index'])->name('book.index');
+
+
+Route::get('/library', [BookController::class, 'library'])->name('book.library');
+Route::get('/{id}', [BookController::class, 'show'])->name('book.show');
+
+
+Route::post('/books', [BookController::class, 'store'])->name('book.store');
+Route::get('/create', [BookController::class, 'create'])->name('book.create');
+Route::get('/{id}/edit', [BookController::class, 'edit'])->name('book.edit');
+Route::put('/{id}', [BookController::class, 'update'])->name('book.update');
+Route::delete('/{id}', [BookController::class, 'destroy'])->name('book.destroy');
+
+Route::post('/{id}', [ReservationController::class, 'store'])->name('reservation.store');
