@@ -1,4 +1,4 @@
-<!-- resources/views/books/index.blade.php -->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
 <body>
 
     <div class="contanrel p-5 m-5 bg-body-tertiary">
-        <!-- resources/views/books/create.blade.php -->
+        
 
 
         <h1>Create Book</h1>

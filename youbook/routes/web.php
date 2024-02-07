@@ -21,6 +21,8 @@ Route::get('/register', [AuthentificationController::class, 'showAccount'])->nam
 Route::post('/registerUser', [AuthentificationController::class, 'creatAccount'])->name('accountCreat');
 
 Route::get('/', [AuthentificationController::class, 'index'])->name('home');
+Route::get('/create', [BookController::class, 'create'])->name('book.create');
+
 Route::post('/login', [AuthentificationController::class, 'login'])->name('login');  
 
 
@@ -36,9 +38,8 @@ Route::get('/{id}', [BookController::class, 'show'])->name('book.show');
 
 
 Route::post('/books', [BookController::class, 'store'])->name('book.store');
-Route::get('/create', [BookController::class, 'create'])->name('book.create');
 Route::get('/{id}/edit', [BookController::class, 'edit'])->name('book.edit');
 Route::put('/{id}', [BookController::class, 'update'])->name('book.update');
 Route::delete('/{id}', [BookController::class, 'destroy'])->name('book.destroy');
 
-Route::post('/{id}', [ReservationController::class, 'store'])->name('reservation.store');
+Route::post('/', [ReservationController::class, 'store'])->name('reservation.store');

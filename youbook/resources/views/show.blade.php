@@ -1,4 +1,4 @@
-<!-- resources/views/books/index.blade.php -->
+
 
 
 
@@ -15,34 +15,56 @@
 <body>
 
     <div class="contanrel p-5 m-5 bg-body-tertiary">
-        <!-- resources/views/books/create.blade.php -->
+       
 
 
-        <!-- Button trigger modal -->
-
-
-        <!-- Modal -->
+      
 
 
 
+        @if($errors->any())
+        <div class="alert alert-danger" id="alert">
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
 
+        @if (Session::has('error'))
+        <div class="alert alert-danger" id="alert">
+            {{ Session::get('error') }}
+        </div>
+        @endif
+        @if (Session::has('success'))
+        <div class="alert alert-success" id="alert">
+            {{ Session::get('success') }}
+        </div>
+        @endif
+        <script>
+            setTimeout(function() {
+                var successAlert = document.getElementById('alert');
+                successAlert.style.display = 'none';
+            }, 1000);
+        </script>
 
         <h1> info of {{ $book->title }}</h1>
 
-        <form method="POST" action="{{ route('reservation.store' ,$book->id ) }}">
-            @csrf
-            <table class="table">
-                <tr>
-                    <th>Author</th>
-                    <td>{{ $book->author }}</td>
-                </tr>
-                <tr>
-                    <th>description</th>
-                    <td>{{ $book->description }}</td>
-                </tr>
-            </table>
-            <a href="{{ route('book.library') }}" class="btn btn-primary">Back</a>
-        </form>
+
+
+        <table class="table">
+            <tr>
+                <th>Author</th>
+                <td>{{ $book->author }}</td>
+            </tr>
+            <tr>
+                <th>description</th>
+                <td>{{ $book->description }}</td>
+            </tr>
+        </table>
+        <a href="{{ route('book.library') }}" class="btn btn-primary">Back</a>
+
 
     </div>
 
@@ -53,7 +75,7 @@
 
 
 
-    <!-- Button trigger modal -->
+   
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
     </button>
@@ -67,12 +89,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @if (Session::has('error'))
-                    <div class="alert alert-danger">
-                        {{ Session::get('error') }}
-                    </div>
-                    @endif
-                    <form method="POST" action="{{ route('reservation.store', $book->id ) }}">
+                    <form method="POST" action="{{ route('reservation.store') }}">
                         @csrf
                         <div class="form-group">
                             <label for="startDate">Start Date</label>
@@ -82,6 +99,9 @@
                             <label for="endDate">End Date</label>
                             <input type="date" class="form-control" id="endDate" name="endDate" required>
                         </div>
+
+                        <input type="hidden" name="bookId" value="{{ $book->id }}">
+
                         <button type="submit" class="btn btn-primary mt-3">Reserve</button>
                     </form>
                 </div>

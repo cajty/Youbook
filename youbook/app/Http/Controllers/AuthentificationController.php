@@ -25,21 +25,22 @@ class AuthentificationController extends Controller
 
     public function creatAccount(Request $request)
     {
-         $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
         ]);
-    
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors());
         }
 
-  
+
         User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
+            'role' => 2,
         ]);
 
         Session::flash('success', 'Registration successful. Please login.');
@@ -56,12 +57,12 @@ class AuthentificationController extends Controller
         if (Auth::attempt($donnerUser)) {
             $user = Auth::user();
             session(['user_id' => $user->id, 'user_name' => $user->name]);
-            // if ($user->role === 'admin') {
-            //     return redirect()->route('show.books');
-            // } else {
-            //     return redirect()->route('show.books.user');
-            // }
-            return redirect()->route('book.library');
+            if ($user->role === 1) {
+                return redirect()->route('book.index');
+               
+            } else {
+                return redirect()->route('book.library');
+            }
         }
 
         return back()->with('error', 'Invalid email or password.');

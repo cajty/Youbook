@@ -37,7 +37,7 @@
         </div>
     </div>
 </div>
-<!-- <script>
+<script>
     function validateForm() {
         var email = document.getElementById('email').value;
         var password = document.getElementById('password').value;
@@ -63,4 +63,4 @@
 
         return true;
     }
-</script> -->
+</script> 

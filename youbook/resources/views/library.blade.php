@@ -1,4 +1,4 @@
-<!-- resources/views/books/index.blade.php -->
+
 
 
 

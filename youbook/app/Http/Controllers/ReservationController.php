@@ -5,41 +5,48 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class ReservationController extends Controller
 {
     //
- 
+
 
     public function store(Request $request)
     {
-        $request->validate([
+
+        $validator = Validator::make($request->all(), [
             'startDate' => ['required', 'date'],
-            'endDate' => ['required', 'date', 'after_or_equal:startDate'],
-        
+            'endDate' => ['required', 'date', 'after:startDate'],
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
 
 
-        $available = Reservation::where('id_livre', $request->book_id)
-                ->where('start_time', '<=', $request->endDate)
-                ->where('end_time', '>=', $request->startDate)
-                ->count() == 0;
 
-        if ($available) {
+        $available = Reservation::where('books_id', $request->bookId)
+            ->where('start_time', '<', $request->endDate)
+            ->where('end_time', '>', $request->startDate)
+            ->count();
+
+
+        if ($available > 0) {
+            Session::flash('error', 'The book is already reserved ');
+        } else {
             Reservation::create([
-                'user_id' => $request->book_id,
-                'books_id' => 1,
+                'user_id' => 1,
+                'books_id' =>   $request->bookId,
                 'start_time' => $request->startDate,
                 'end_time' => $request->endDate,
             ]);
 
             Session::flash('success', 'Reservation successful.');
-        } else {
-            Session::flash('error', 'The book is already reserved ');
         }
 
-        return redirect("/$request->book_id");
+        return redirect()->back();
     }
 }

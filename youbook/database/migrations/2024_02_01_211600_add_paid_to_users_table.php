@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->integer('role');
             $table->string('password');
             $table->timestamps();
         });
@@ -28,3 +29,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+

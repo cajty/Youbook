@@ -50,7 +50,7 @@ class BookController extends Controller
             'user_id' => 1,
         ]);
 
-        return redirect()->route('books.index')
+        return redirect()->route('book.index')
             ->with('success', 'Book created successfully.');
     }
 
