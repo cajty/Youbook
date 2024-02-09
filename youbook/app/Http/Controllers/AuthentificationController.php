@@ -59,12 +59,19 @@ class AuthentificationController extends Controller
             session(['user_id' => $user->id, 'user_name' => $user->name]);
             if ($user->role === 1) {
                 return redirect()->route('book.index');
-               
             } else {
                 return redirect()->route('book.library');
             }
         }
 
         return back()->with('error', 'Invalid email or password.');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        session()->forget(['user_id', 'user_name']);
+
+        return redirect()->route('home');
     }
 }

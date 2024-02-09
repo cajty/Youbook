@@ -1,4 +1,3 @@
-
 @extends('layout')
 
 @section('content')
@@ -31,13 +30,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($books as $book)
+                @foreach($Reservations as $res)
                 <tr>
-                    <td>{{ $book->title }}</td>
-                    <td>{{ $book->author }}</td>
+                    <td>{{ $res->title }}</td>
+                    <td>{{ $res->author }}</td>
                     <td>
-                        <a href="{{ route('book.edit', $book->id) }}" class="btn btn-secondary">Update</a>
-                        <form action="{{ route('book.destroy', $book->id) }}" method="POST" style="display: inline-block;">
+                        
+                        <form action="{{ route('book.destroy', $res->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">Delete</button>

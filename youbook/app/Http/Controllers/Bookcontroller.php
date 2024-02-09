@@ -47,7 +47,7 @@ class BookController extends Controller
             'title' => $request->title,
             'author' => $request->author,
             'description' => $request->description,
-            'user_id' => 1,
+            'user_id' => session('user_id'),
         ]);
 
         return redirect()->route('book.index')

@@ -17,29 +17,33 @@ use App\Http\Controllers\AuthentificationController;
 |
 */
 
-Route::get('/register', [AuthentificationController::class, 'showAccount'])->name('account');
-Route::post('/registerUser', [AuthentificationController::class, 'creatAccount'])->name('accountCreat');
+Route::get('/logout', [AuthentificationController::class, 'logout'])->name('logout');
+Route::middleware(['Visitor'])->group(function () {
+    Route::get('/register', [AuthentificationController::class, 'showAccount'])->name('account');
+    Route::post('/registerUser', [AuthentificationController::class, 'creatAccount'])->name('accountCreat');
+    Route::get('/', [AuthentificationController::class, 'index'])->name('home');
+    Route::post('/login', [AuthentificationController::class, 'login'])->name('login');
 
-Route::get('/', [AuthentificationController::class, 'index'])->name('home');
-Route::get('/create', [BookController::class, 'create'])->name('book.create');
-
-Route::post('/login', [AuthentificationController::class, 'login'])->name('login');  
-
-
-
+});
 
 
-Route::get('/books', [BookController::class, 'index'])->name('book.index');
-Route::post('/books', [BookController::class, 'index'])->name('book.index');
+Route::middleware(['Biblio'])->group(function () {
+
+    Route::get('/books', [BookController::class, 'index'])->name('book.index');
+    Route::post('/books', [BookController::class, 'index'])->name('book.index');
+    Route::post('/books', [BookController::class, 'store'])->name('book.store');
+    Route::get('/create', [BookController::class, 'create'])->name('book.create');
+    Route::get('/{id}/edit', [BookController::class, 'edit'])->name('book.edit');
+    Route::put('/{id}', [BookController::class, 'update'])->name('book.update');
+    Route::delete('/{id}', [BookController::class, 'destroy'])->name('book.destroy');
+});
 
 
-Route::get('/library', [BookController::class, 'library'])->name('book.library');
-Route::get('/{id}', [BookController::class, 'show'])->name('book.show');
+Route::middleware(['Etudi'])->group(function () {
 
 
-Route::post('/books', [BookController::class, 'store'])->name('book.store');
-Route::get('/{id}/edit', [BookController::class, 'edit'])->name('book.edit');
-Route::put('/{id}', [BookController::class, 'update'])->name('book.update');
-Route::delete('/{id}', [BookController::class, 'destroy'])->name('book.destroy');
-
-Route::post('/', [ReservationController::class, 'store'])->name('reservation.store');
+    
+    Route::get('/library', [BookController::class, 'library'])->name('book.library');
+    Route::get('/{id}', [BookController::class, 'show'])->name('book.show');
+    Route::post('/', [ReservationController::class, 'store'])->name('reservation.store');
+});

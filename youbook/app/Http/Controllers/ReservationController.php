@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 
 
-class ReservationController extends Controller
+class ReservationController extends Controller 
 {
     //
 
@@ -38,7 +38,7 @@ class ReservationController extends Controller
             Session::flash('error', 'The book is already reserved ');
         } else {
             Reservation::create([
-                'user_id' => 1,
+                'user_id' => session('user_id'),
                 'books_id' =>   $request->bookId,
                 'start_time' => $request->startDate,
                 'end_time' => $request->endDate,
@@ -48,5 +48,10 @@ class ReservationController extends Controller
         }
 
         return redirect()->back();
+    }
+    public function index()
+    {
+        $Reservations = Reservation::all();
+        return view('Reservation', compact('Reservations'));
     }
 }
