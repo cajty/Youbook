@@ -48,7 +48,7 @@
             </tbody>
         </table>
 
-        <a href="{{ route('book.create') }}" class="btn btn-primary">Add Book</a>
+        <a href="{{ route('book.create') }}" class="btn btn-primary my-4">Add Book</a>
     </div>
 
 

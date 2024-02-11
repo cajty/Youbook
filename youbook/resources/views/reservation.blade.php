@@ -32,11 +32,11 @@
             <tbody>
                 @foreach($Reservations as $res)
                 <tr>
-                    <td>{{ $res->title }}</td>
-                    <td>{{ $res->author }}</td>
+                    <td>{{ $res->start_time }}</td>
+                    <td>{{ $res->end_time }}</td>
                     <td>
                         
-                        <form action="{{ route('book.destroy', $res->id) }}" method="POST" style="display: inline-block;">
+                        <form action="{{ route('res.destroy', $res->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">Delete</button>
@@ -46,8 +46,6 @@
                 @endforeach
             </tbody>
         </table>
-
-        <a href="{{ route('book.create') }}" class="btn btn-primary">Add Book</a>
     </div>
 
 

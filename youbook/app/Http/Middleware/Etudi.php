@@ -22,7 +22,5 @@ class Etudi
 
 
         abort(401);
-       
-       
     }
 }

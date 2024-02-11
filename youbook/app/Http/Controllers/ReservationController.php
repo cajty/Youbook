@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\Validator;
 class ReservationController extends Controller 
 {
     //
-
+    public function index()
+    {
+        $Reservations = Reservation:: where('user_id', session('user_id'))->get();
+        return view('reservation', compact('Reservations'));
+    }
 
     public function store(Request $request)
     {
@@ -49,9 +53,14 @@ class ReservationController extends Controller
 
         return redirect()->back();
     }
-    public function index()
+    public function destroy(string $id)
     {
-        $Reservations = Reservation::all();
-        return view('Reservation', compact('Reservations'));
+        $res = Reservation::findOrFail($id);
+        $res->delete();
+
+        return redirect()->back()
+            ->with('success', 'Reservation deleted successfully.');
     }
+  
+    
 }

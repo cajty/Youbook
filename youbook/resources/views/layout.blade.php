@@ -18,13 +18,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('book.library') }}">library</a>
+                 
+                        <a class="nav-link" href="{{ route('book.library') }}">Library</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('show.reservation') }}">Reservation</a>
                     </li>
                 </ul>
                 <div class="dropdown">
                     <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
 
-                        @if(session('user_name'))
+                    @if(session('user_name'))
                         {{ session('user_name') }}
                         @else
                         Login
